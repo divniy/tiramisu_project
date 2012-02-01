@@ -6,7 +6,8 @@ gem 'rails', '3.2.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3', '~> 1.3.5'
-gem 'simple_form', '~> 1.5.2'
+#gem 'simple_form', '~> 1.5.2'
+gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'
 gem 'devise', '~> 2.0.0'
 #rails generate simple_form:install --bootstrap
 
