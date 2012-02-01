@@ -12,7 +12,16 @@
       <div class="container">
         <h3><%= link_to "TiramisuProject", "/" %></h3>
         <ul class="nav">
-          <li><%= link_to "Link1", "/path1"  %></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              User
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "User", "/path1"  %></li>
+            </ul>
+          </li>
+          <li><%= link_to "User", "/path1"  %></li>
           <li><%= link_to "Link2", "/path2"  %></li>
           <li><%= link_to "Link3", "/path3"  %></li>
         </ul>
@@ -23,7 +32,20 @@
     <div class="content">
       <div class="row">
         <div class="span11">
+
+          <% if notice %>
+              <div class="alert-message info">
+                <p><%= notice %></p>
+              </div>
+          <% end %>
+          <% if alert %>
+              <div class="alert-message error">
+                <p><%= alert %></p>
+              </div>
+          <% end %>
+
           <%= yield %>
+
         </div>
         <div class="span1">&nbsp;</div>
         <div class="span4">
