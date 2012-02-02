@@ -1,6 +1,9 @@
-<h1>Editing account</h1>
+<%
+   content_for :title do
+     "Editing account"
+   end
+%>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @account %> |
-<%= link_to 'Back', accounts_path %>
+

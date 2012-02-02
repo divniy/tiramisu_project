@@ -1,27 +1,33 @@
-<h1>Listing accounts</h1>
+<%
+   content_for :title do
+     "Listing accounts"
+   end
+%>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Role</th>
-    <th>Owner</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<table class="table table-bordered">
+  <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Owner</th>
+        <th></th>
+        <th></th>
+      </tr>
+  </thead>
 
-<% @accounts.each do |account| %>
-  <tr>
-    <td><%= account.name %></td>
-    <td><%= account.role %></td>
-    <td><%= account.owner %></td>
-    <td><%= link_to 'Show', account %></td>
-    <td><%= link_to 'Edit', edit_account_path(account) %></td>
-    <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.name %></td>
+        <td><%= account.role %></td>
+        <td><%= account.owner.id %></td>
+        <td><%= link_to 'Edit', edit_account_path(account) %></td>
+        <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Account', new_account_path %>
+<%= link_to 'New Account', new_account_path, :class => 'btn btn-primary' %>

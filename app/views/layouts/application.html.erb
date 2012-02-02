@@ -26,6 +26,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li><%= link_to "Profile", edit_user_registration_path  %></li>
+                  <li><%= link_to "Accounts", accounts_path  %></li>
                   <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
                 </ul>
               </li>
@@ -39,8 +40,10 @@
   <div class="container">
 
       <div class="row">
-        <div class="span10">
-
+        <section class="span10">
+          <div class="page-header">
+            <h1><%= yield :title %></h1>
+          </div>
           <% if notice %>
               <div class="alert alert-info">
                 <%= notice %>
@@ -54,7 +57,7 @@
 
           <%= yield %>
 
-        </div>
+        </section>
 
         <div class="span2">
           <h3>Sidebar</h3>

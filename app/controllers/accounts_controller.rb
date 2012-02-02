@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.all
+    @accounts = current_user.accounts.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,19 +12,19 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1
   # GET /accounts/1.json
-  def show
-    @account = Account.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @account }
-    end
-  end
+  #def show
+  #  @account = Account.find(params[:id])
+  #
+  #  respond_to do |format|
+  #    format.html # show.html.erb
+  #    format.json { render json: @account }
+  #  end
+  #end
 
   # GET /accounts/new
   # GET /accounts/new.json
   def new
-    @account = Account.new
+    @account = current_user.accounts.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,17 +34,17 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/edit
   def edit
-    @account = Account.find(params[:id])
+    @account = current_user.accounts.find(params[:id])
   end
 
   # POST /accounts
   # POST /accounts.json
   def create
-    @account = Account.new(params[:account])
+    @account = current_user.accounts.build(params[:account])
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to @account, notice: 'Account was successfully created.' }
+        format.html { redirect_to accounts_path, notice: 'Account was successfully created.' }
         format.json { render json: @account, status: :created, location: @account }
       else
         format.html { render action: "new" }
@@ -56,11 +56,11 @@ class AccountsController < ApplicationController
   # PUT /accounts/1
   # PUT /accounts/1.json
   def update
-    @account = Account.find(params[:id])
+    @account = current_user.accounts.find(params[:id])
 
     respond_to do |format|
       if @account.update_attributes(params[:account])
-        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
+        format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -72,8 +72,8 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
-    @account = Account.find(params[:id])
-    @account.destroy
+    @account = current_user.accounts.find(params[:id])
+    current_user.accounts.delete(@account)
 
     respond_to do |format|
       format.html { redirect_to accounts_url }
