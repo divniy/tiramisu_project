@@ -7,11 +7,14 @@ gem 'rails', '3.2.1'
 
 gem 'sqlite3', '~> 1.3.5'
 #gem 'simple_form', '~> 1.5.2'
-gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'
+gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'  #2.0.0.rc
+#rails generate simple_form:install (--bootstrap)
 gem 'devise', '~> 2.0.0'
-#rails generate simple_form:install --bootstrap
+gem 'cancan', '~> 1.6.7'
+#rails g cancan:ability
 
 
+#rails generate simple_form:install (--bootstrap)
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

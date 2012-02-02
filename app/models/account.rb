@@ -1,10 +1,21 @@
 class Account < ActiveRecord::Base
+  # Aliases
+  alias_attribute :type, :role
+  # Attributes
+  attr_accessible :name, :type
 
-  attr_accessible :name, :role
+
+
+  # Associations
 
   belongs_to :owner, :class_name => 'User', :inverse_of => :accounts
 
-  validates :role, :presence => true
+  # Validators
+
+  validates :type, :presence => true
+
+
+
 
   def has_roles
     self.class.roles
