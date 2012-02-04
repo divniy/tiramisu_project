@@ -14,13 +14,6 @@ class Account < ActiveRecord::Base
 
   validates :type, :presence => true
 
-
-
-
-  def has_roles
-    self.class.roles
-  end
-
   def self.roles
     ROLES
   end
