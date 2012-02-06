@@ -9,6 +9,7 @@
       <tr>
         <th>Name</th>
         <th>Role</th>
+        <th>State</th>
         <th>Owner</th>
         <th></th>
         <th></th>
@@ -20,6 +21,13 @@
       <tr>
         <td><%= account.name %></td>
         <td><%= account.role %></td>
+        <td>
+          <% if account.active? %>
+              <b>Active</b>
+          <% else %>
+              <%= link_to 'Activate', activate_account_path(account) %>
+          <% end %>
+        </td>
         <td><%= account.owner.id %></td>
         <td><%= link_to 'Edit', edit_account_path(account) %></td>
         <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>

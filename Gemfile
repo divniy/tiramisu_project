@@ -11,6 +11,8 @@ gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'  #2.0.0
 #rails generate simple_form:install (--bootstrap)
 gem 'devise', '~> 2.0.0'
 gem 'cancan', '~> 1.6.7'
+gem 'state_machine', '~> 1.1.2'
+
 #rails g cancan:ability
 
 

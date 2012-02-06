@@ -1,6 +1,8 @@
 TiramisuProject::Application.routes.draw do
 
-  resources :accounts
+  resources :accounts do
+    get :activate, :on => :member
+  end
 
   devise_for :users
 

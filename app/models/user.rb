@@ -11,10 +11,8 @@ class User < ActiveRecord::Base
   has_many :accounts, :foreign_key => :owner_id, :dependent => :destroy,
            :inverse_of => :owner
 
-  has_many :active_bindings, :dependent => :destroy
-
-  has_one :account_binding, :class_name => "ActiveBinding", :conditions => { :activable_type => "Account" }
-  has_one :active_account, :through => :account_binding, :source => :activable, :source_type => "Account"
+  has_one :active_account, :class_name => "Account", :foreign_key => :owner_id,
+          :conditions => { :state => :active }
 
 
   accepts_nested_attributes_for :accounts

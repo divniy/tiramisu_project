@@ -72,6 +72,11 @@ class AccountsController < ApplicationController
     end
   end
 
+  def activate
+    current_user.accounts.find(params[:id]).activate
+    redirect_to accounts_path
+  end
+
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy

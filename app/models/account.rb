@@ -7,7 +7,6 @@ class Account < ActiveRecord::Base
   # Associations
 
   belongs_to :owner, :class_name => 'User', :inverse_of => :accounts
-  has_one :active_binding, :as => :activable
 
   # Validators
 
@@ -23,13 +22,17 @@ class Account < ActiveRecord::Base
     ROLES
   end
 
-  def activate
-    if owner.nil? then raise ActiveRecord::Rollback end
-    owner.active_account = self
-  end
-
-  def active?
-    !active_binding.nil?
+  # State machine
+  state_machine :initial => :basic do
+    before_transition any => :active do |account|
+      account.owner.active_account.deactivate if !account.owner.active_account.nil?
+    end
+    event :activate do
+      transition :basic => :active
+    end
+    event :deactivate do
+      transition :active => :basic
+    end
   end
 
   private
