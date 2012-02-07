@@ -7,6 +7,7 @@ class Account < ActiveRecord::Base
   # Associations
 
   belongs_to :owner, :class_name => 'User', :inverse_of => :accounts
+  #has_many
 
   # Validators
 
@@ -25,7 +26,7 @@ class Account < ActiveRecord::Base
   # State machine
   state_machine :initial => :basic do
     before_transition any => :active do |account|
-      account.owner.active_account.deactivate if !account.owner.active_account.nil?
+      account.owner.active_account.deactivate if account.owner.active_account
     end
     event :activate do
       transition :basic => :active
