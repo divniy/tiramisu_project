@@ -1,5 +1,7 @@
 TiramisuProject::Application.routes.draw do
 
+  resources :projects
+
   resources :accounts do
     get :activate, :on => :member
   end
