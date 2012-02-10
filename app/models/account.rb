@@ -12,29 +12,34 @@ class Account < ActiveRecord::Base
 
   # Validators
 
-  validates :owner, :type, :presence => true
+  validates :name, :type, :presence => true
 
   # Callbacks
 
   after_create :activate
 
-  # Methods
+  # State machine
+  state_machine :initial => :off do
+    state :off
+    state :active
 
+    event :activate do
+      transition all => :active
+    end
+
+    event :deactivate do
+      transition all => :off
+    end
+
+    before_transition any - :active => :active do |account|
+      Account.active.find_by_owner_id(account.owner_id).try(:deactivate)
+    end
+  end
+  state_machine.states.each { |s| scope s.name, where(:state => s.name) }
+
+  # Methods
   def self.roles
     ROLES
-  end
-
-  # State machine
-  state_machine :initial => :basic do
-    before_transition any => :active do |account|
-      account.owner.active_account.deactivate if account.owner.active_account
-    end
-    event :activate do
-      transition :basic => :active
-    end
-    event :deactivate do
-      transition :active => :basic
-    end
   end
 
   private

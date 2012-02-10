@@ -2,90 +2,51 @@ class AccountsController < ApplicationController
 
   before_filter :authenticate_user!
 
-  # GET /accounts
-  # GET /accounts.json
   def index
-    @accounts = current_user.accounts.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @accounts }
-    end
+    @accounts = accounts
   end
 
-  # GET /accounts/1
-  # GET /accounts/1.json
-  #def show
-  #  @account = Account.find(params[:id])
-  #
-  #  respond_to do |format|
-  #    format.html # show.html.erb
-  #    format.json { render json: @account }
-  #  end
-  #end
-
-  # GET /accounts/new
-  # GET /accounts/new.json
   def new
-    @account = current_user.accounts.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @account }
-    end
+    @account = Account.new
   end
 
-  # GET /accounts/1/edit
   def edit
-    @account = current_user.accounts.find(params[:id])
+    @account = accounts.find(params[:id])
   end
 
-  # POST /accounts
-  # POST /accounts.json
   def create
-    @account = current_user.accounts.build(params[:account])
-
-    respond_to do |format|
-      if @account.save
-        format.html { redirect_to accounts_path, notice: 'Account was successfully created.' }
-        format.json { render json: @account, status: :created, location: @account }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
+    @account = accounts.build(params[:account])
+    if @account.save
+      redirect_to accounts_path, notice: 'Account was successfully created.'
+    else
+      render action: "new"
     end
   end
 
-  # PUT /accounts/1
-  # PUT /accounts/1.json
   def update
-    @account = current_user.accounts.find(params[:id])
-
-    respond_to do |format|
-      if @account.update_attributes(params[:account])
-        format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
+    send :edit
+    if @account.update_attributes(params[:account])
+      redirect_to accounts_path, notice: 'Account was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 
-  def activate
-    current_user.accounts.find(params[:id]).activate
+  def destroy
+    send :edit
+    @account.destroy
     redirect_to accounts_path
   end
 
-  # DELETE /accounts/1
-  # DELETE /accounts/1.json
-  def destroy
-    @account = current_user.accounts.find(params[:id])
-    current_user.accounts.delete(@account)
+  def activate
+    send :edit
+    @account.activate
+    redirect_to accounts_path, notice: 'Account was successfully activated.'
+  end
 
-    respond_to do |format|
-      format.html { redirect_to accounts_url }
-      format.json { head :no_content }
-    end
+  private
+
+  def accounts
+    current_user.accounts
   end
 end
