@@ -36,14 +36,16 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  #private
+  private
 
+  # Account context
   def projects
-    account.projects
+    current_account.projects
   end
 
-  def account
-    current_user.accounts.active
+  # User context
+  def current_account
+    current_user.active_account
   end
 
 end

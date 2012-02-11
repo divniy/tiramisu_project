@@ -29,8 +29,8 @@
           <% end %>
         </td>
         <td><%= account.owner.id %></td>
-        <td><%= link_to 'Edit', edit_account_path(account) %></td>
-        <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= link_to 'Edit', edit_account_path(account) if can? :edit, account %></td>
+        <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete if can? :destroy, account %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +38,6 @@
 
 <br />
 
-<%= link_to 'New Account', new_account_path, :class => 'btn btn-primary' %>
+<% if can? :create, Account %>
+  <%= link_to 'New Account', new_account_path, :class => 'btn btn-primary' %>
+<% end %>

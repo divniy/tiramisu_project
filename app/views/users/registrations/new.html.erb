@@ -7,17 +7,7 @@
     <%= f.input :fullname, :autofocus => true %>
     <%= f.input :email, :required => true %>
     
-    <% #TODO move following methods calls to custom devise controller %>
-    <%
-       if resource.accounts.empty?
-         resource.accounts.build
-
-       end
-       @roles = resource.accounts.roles
-    %>
-
     <%= f.simple_fields_for :accounts do |acc| %>
-        <% # acc.input :name, :as => :hidden, :wrapper => false, :tag_html => false, :input_html => { :value => "New Account" } %>
         <%= acc.input_field :name, :as => :hidden, :value => "New Account" %>
         <%= acc.input :role, :collection => @roles, :required => true %>
     <% end %>
@@ -30,5 +20,4 @@
     <%= render "users/links" %>
   </div>
 <% end %>
-
 

@@ -1,8 +1,8 @@
 class Account < ActiveRecord::Base
   # Aliases
-  alias_attribute :type, :role
+  #alias_attribute :type, :role
   # Attributes
-  attr_accessible :name, :type, :role
+  attr_accessible :name, :role
 
   # Associations
 
@@ -12,7 +12,9 @@ class Account < ActiveRecord::Base
 
   # Validators
 
-  validates :name, :type, :presence => true
+  validates :name, :role, :presence => true
+
+
 
   # Callbacks
 

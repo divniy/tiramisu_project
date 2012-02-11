@@ -1,12 +1,14 @@
 TiramisuProject::Application.routes.draw do
 
+  devise_for :users, :controllers => { :registrations => 'users/registrations' }
+
   resources :projects
 
   resources :accounts do
     get :activate, :on => :member
   end
 
-  devise_for :users
+
 
   get "pages/welcome"
 

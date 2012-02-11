@@ -8,11 +8,23 @@ class User < ActiveRecord::Base
 
   has_many :accounts, :foreign_key => :owner_id, :dependent => :destroy,
            :inverse_of => :owner
-  has_one :active_account, :class_name => "Account", :foreign_key => :owner_id,
-          :conditions => { :state => :active }
-  has_many :projects, :through => :active_account
 
   accepts_nested_attributes_for :accounts
+
+  has_one :active_account, :class_name => "Account", :foreign_key => :owner_id,
+          :conditions => { :state => :active }, :readonly => true
+
+  def is?(asked_role)
+    role == asked_role.to_sym
+  end
+
+  def role
+    active_account.role.to_sym
+  end
+
+
+
+  #has_many :projects, :through => :active_account
 
   #Methods
 end
