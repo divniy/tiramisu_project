@@ -10,6 +10,7 @@
         <th>Name</th>
         <th>Role</th>
         <th>State</th>
+        <th>Action</th>
         <th>Owner</th>
         <th></th>
         <th></th>
@@ -21,11 +22,14 @@
       <tr>
         <td><%= account.name %></td>
         <td><%= account.role %></td>
+        <td><%= account.state %></td>
         <td>
-          <% if account.active? %>
-              <b>Active</b>
+          <% if account.unpaid? %>
+              <%= link_to 'Pay', pay_account_path(account) if can? :pay, account%>
+          <% elsif account.paid? %>
+              <%= link_to 'Activate', activate_account_path(account) if can? :activate, account %>
           <% else %>
-              <%= link_to 'Activate', activate_account_path(account) %>
+              <b>Active</b>
           <% end %>
         </td>
         <td><%= account.owner.id %></td>

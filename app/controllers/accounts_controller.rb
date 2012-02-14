@@ -17,17 +17,11 @@ class AccountsController < ApplicationController
 
   def create
     @account = accounts.build(params[:account])
-    #if cannot? :create, @account
-    #  flash[:notice] = 'Can not create another single account'
-    #  render :new
-    #else
     if @account.save
       redirect_to accounts_path, notice: 'Account was successfully created.'
     else
       render action: "new"
     end
-
-    #end
   end
 
   def update
@@ -43,6 +37,12 @@ class AccountsController < ApplicationController
     send :edit
     @account.destroy
     redirect_to accounts_path
+  end
+
+  def pay
+    send :edit
+    @account.pay
+    redirect_to accounts_path, notice: 'Account was successfully paid.'
   end
 
   def activate

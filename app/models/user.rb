@@ -19,7 +19,13 @@ class User < ActiveRecord::Base
   end
 
   def role
-    active_account.role.to_sym
+    if active_account
+      active_account.role.to_sym
+    elsif accounts.exists?
+      :customer
+    else
+      :idler
+    end
   end
 
 

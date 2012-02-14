@@ -2,7 +2,7 @@ class Account < ActiveRecord::Base
   # Aliases
   #alias_attribute :type, :role
   # Attributes
-  attr_accessible :name, :role
+  attr_accessible :name, :role, :state_event
 
   # Associations
 
@@ -14,27 +14,31 @@ class Account < ActiveRecord::Base
 
   validates :name, :role, :presence => true
 
-
-
   # Callbacks
 
-  after_create :activate
+  #after_create :activate
 
   # State machine
-  state_machine :initial => :off do
-    state :off
+  state_machine :initial => :unpaid do
+    state :unpaid
+    state :paid
     state :active
 
+    event :pay do
+      transition :unpaid => :paid
+    end
+
     event :activate do
-      transition all => :active
+      transition [:paid, :active] => :active
     end
-
     event :deactivate do
-      transition all => :off
+      transition [:active, :paid] => :paid
     end
 
-    before_transition any - :active => :active do |account|
-      Account.active.find_by_owner_id(account.owner_id).try(:deactivate)
+    before_transition :paid => :active do |account|
+      Account.where(:owner_id => account.owner_id).active.each do |acc|
+        acc.deactivate
+      end
     end
   end
   state_machine.states.each { |s| scope s.name, where(:state => s.name) }

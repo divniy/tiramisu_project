@@ -3,6 +3,7 @@
 
     <%= f.input :name %>
     <%= f.input :role, :collection => @account.class.roles, :required => true, :include_blank => false %>
+    <%= f.input :state_event, :collection => @account.state_events, :required => true, :include_blank => false %>
 
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
