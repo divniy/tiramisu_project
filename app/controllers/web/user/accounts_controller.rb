@@ -1,10 +1,10 @@
-class AccountsController < ApplicationController
+class Web::User::AccountsController < Web::ApplicationController
 
   before_filter :authenticate_user!
   load_and_authorize_resource
 
   def index
-    @accounts = accounts
+    #@accounts = accounts
   end
 
   def new
@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
   def create
     @account = accounts.build(params[:account])
     if @account.save
-      redirect_to accounts_path, notice: 'Account was successfully created.'
+      redirect_to user_accounts_path, notice: 'Account was successfully created.'
     else
       render action: "new"
     end
@@ -27,7 +27,7 @@ class AccountsController < ApplicationController
   def update
     send :edit
     if @account.update_attributes(params[:account])
-      redirect_to accounts_path, notice: 'Account was successfully updated.'
+      redirect_to user_accounts_path, notice: 'Account was successfully updated.'
     else
       render action: "edit"
     end
@@ -36,19 +36,19 @@ class AccountsController < ApplicationController
   def destroy
     send :edit
     @account.destroy
-    redirect_to accounts_path
+    redirect_to user_accounts_path
   end
 
   def pay
     send :edit
     @account.pay
-    redirect_to accounts_path, notice: 'Account was successfully paid.'
+    redirect_to user_accounts_path, notice: 'Account was successfully paid.'
   end
 
   def activate
     send :edit
     @account.activate
-    redirect_to accounts_path, notice: 'Account was successfully activated.'
+    redirect_to user_accounts_path, notice: 'Account was successfully activated.'
   end
 
   rescue_from CanCan::AccessDenied do |exception|

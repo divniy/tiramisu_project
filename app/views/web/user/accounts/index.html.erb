@@ -25,16 +25,16 @@
         <td><%= account.state %></td>
         <td>
           <% if account.unpaid? %>
-              <%= link_to 'Pay', pay_account_path(account) if can? :pay, account%>
+              <%= link_to 'Pay', pay_user_account_path(account) if can? :pay, account%>
           <% elsif account.paid? %>
-              <%= link_to 'Activate', activate_account_path(account) if can? :activate, account %>
+              <%= link_to 'Activate', activate_user_account_path(account) if can? :activate, account %>
           <% else %>
               <b>Active</b>
           <% end %>
         </td>
         <td><%= account.owner.id %></td>
-        <td><%= link_to 'Edit', edit_account_path(account) if can? :edit, account %></td>
-        <td><%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete if can? :destroy, account %></td>
+        <td><%= link_to 'Edit',  edit_user_account_path(account) if can? :edit, account %></td>
+        <td><%= link_to 'Destroy', user_account_path(account), confirm: 'Are you sure?', method: :delete if can? :destroy, account %></td>
       </tr>
     <% end %>
   </tbody>
@@ -43,5 +43,5 @@
 <br />
 
 <% if can? :create, Account %>
-  <%= link_to 'New Account', new_account_path, :class => 'btn btn-primary' %>
+  <%= link_to 'New Account', new_user_account_path, :class => 'btn btn-primary' %>
 <% end %>

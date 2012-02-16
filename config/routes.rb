@@ -1,19 +1,33 @@
 TiramisuProject::Application.routes.draw do
 
-  devise_for :users, :controllers => { :registrations => 'users/registrations' }
+  scope :module => 'web' do
+    devise_for :users, :path => 'user', :controllers => { :registrations => 'web/user/registrations', :sessions => 'devise/sessions' }
+    namespace 'user' do
 
-  resources :projects
+      resources :accounts do
+        get :pay, :on => :member
+        get :activate, :on => :member
+        resources :projects
+      end
+    end
 
-  resources :accounts do
-    get :pay, :on => :member
-    get :activate, :on => :member
   end
 
 
 
-  get "pages/welcome"
 
-  get "pages/help"
+  #resources :projects
+
+  #resources :accounts do
+  #  get :pay, :on => :member
+  #  get :activate, :on => :member
+  #end
+
+
+
+  #get "pages/welcome"
+
+  #get "pages/help"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

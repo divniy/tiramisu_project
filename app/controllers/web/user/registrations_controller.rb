@@ -1,4 +1,4 @@
-class Users::RegistrationsController < Devise::RegistrationsController
+class Web::User::RegistrationsController < Devise::RegistrationsController
   before_filter :only => [:new, :create] do
     @roles = Account.roles
   end
